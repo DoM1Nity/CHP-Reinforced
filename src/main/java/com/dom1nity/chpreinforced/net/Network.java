@@ -14,7 +14,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Network {
     private static final String PROTOCOL = "1";
-    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(ChpReinforced.MODID, "main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
+    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(ChpReinforced.MODID, "main"), () -> PROTOCOL, NetworkRegistry.acceptMissingOr(PROTOCOL), NetworkRegistry.acceptMissingOr(PROTOCOL));
 
     private Network() {
     }
@@ -27,8 +27,19 @@ public final class Network {
                 .add();
     }
 
+    /**
+     * The mod is optional on the other side of the connection: a player without it can still join (they just get no
+     * outlines and the server alone enforces the protection), so only send to players that have the channel.
+     */
+    private static boolean hasMod(ServerPlayer player) {
+        return player.connection != null && CHANNEL.isRemotePresent(player.connection.connection);
+    }
+
     /** Sends the whole data set of the player's current dimension. */
     public static void sendFull(ServerPlayer player) {
+        if (!hasMod(player))
+            return;
+
         ServerLevel level = player.serverLevel();
 
         for (SyncPacket packet : SyncPacket.full(level.dimension(), ServerStore.getOrLoad(level).map)) {
@@ -36,12 +47,19 @@ public final class Network {
         }
     }
 
+    private static void sendToDimension(ServerLevel level, SyncPacket packet) {
+        for (ServerPlayer player : level.players()) {
+            if (hasMod(player))
+                CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+        }
+    }
+
     public static void sendAdded(ServerLevel level, long pos, Entry entry) {
-        CHANNEL.send(PacketDistributor.DIMENSION.with(level::dimension), SyncPacket.added(level.dimension(), pos, entry));
+        sendToDimension(level, SyncPacket.added(level.dimension(), pos, entry));
     }
 
     public static void sendRemoved(ServerLevel level, long... positions) {
         if (positions.length > 0)
-            CHANNEL.send(PacketDistributor.DIMENSION.with(level::dimension), SyncPacket.removed(level.dimension(), positions));
+            sendToDimension(level, SyncPacket.removed(level.dimension(), positions));
     }
 }
