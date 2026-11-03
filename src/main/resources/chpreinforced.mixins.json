@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.dom1nity.chpreinforced.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "chpreinforced.refmap.json",
+  "mixins": [
+    "BlockStateBaseMixin",
+    "ExplosionDamageCalculatorMixin",
+    "FireBlockMixin",
+    "LevelMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

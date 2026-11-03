@@ -1,0 +1,7 @@
+{
+  "chpreinforced.message.reinforced": "Block reinforced",
+  "chpreinforced.message.unreinforced": "Reinforcement removed",
+  "chpreinforced.message.already_reinforced": "This block is already reinforced (owner: %s)",
+  "chpreinforced.message.cannot_reinforce": "This block cannot be reinforced",
+  "chpreinforced.message.not_owner": "This block was reinforced by %s - only they can break it"
+}

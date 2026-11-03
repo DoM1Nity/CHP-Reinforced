@@ -1,0 +1,39 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+issueTrackerURL="https://github.com/DoM1Nity/CHP-Reinforced/issues"
+
+[[mods]]
+modId="chpreinforced"
+version="1.0.0"
+displayName="CHP Reinforced Blocks"
+authors="DoM1Nity"
+description='''
+Lets SecurityCraft's Universal Block Reinforcer protect blocks from any mod.
+The reinforcement is stored per position: the block itself is not replaced, so removing this mod
+never deletes blocks - they simply stop being protected.
+
+Позволяет Универсальному укрепителю блоков из SecurityCraft укреплять блоки из любых модов.
+Укрепление привязано к месту, сам блок не заменяется: если удалить мод, блоки останутся на месте.
+'''
+
+[[dependencies.chpreinforced]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.chpreinforced]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.20.2)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.chpreinforced]]
+    modId="securitycraft"
+    mandatory=false
+    versionRange="[1.9.8,)"
+    ordering="AFTER"
+    side="BOTH"

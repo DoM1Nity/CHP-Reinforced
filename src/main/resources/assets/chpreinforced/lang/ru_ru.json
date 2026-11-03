@@ -1,0 +1,7 @@
+{
+  "chpreinforced.message.reinforced": "Блок укреплён",
+  "chpreinforced.message.unreinforced": "Укрепление снято",
+  "chpreinforced.message.already_reinforced": "Этот блок уже укреплён (владелец: %s)",
+  "chpreinforced.message.cannot_reinforce": "Этот блок нельзя укрепить",
+  "chpreinforced.message.not_owner": "Этот блок укрепил игрок %s — сломать его может только он"
+}
